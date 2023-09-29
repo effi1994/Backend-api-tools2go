@@ -1,0 +1,147 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+    provider = "prisma-client-js"
+}
+
+datasource db {
+    provider = "mysql"
+    url      = "mysql://root:1234@127.0.0.1:3306/tools_to_go"
+}
+
+model User {
+    id           Int     @id @default(autoincrement())
+    email        String  @unique
+    password     String
+    role         Role    @default(USER)
+    refreshToken String? @unique
+}
+
+model Users {
+    id                   Int              @id @default(autoincrement())
+    email                String           @unique
+    password             String
+    token                String           @db.Text()
+    fullName             String
+    phone                String           @unique
+    city                 String
+    expoToken            String
+    imageProfile         String?          @default("")
+    isAdmin              Boolean          @default(false)
+    products             products[]
+    productActionsRenter productActions[] @relation("Renter")
+    rating               Rating[]
+    isOnline             Boolean
+    memberShip           Status           @default(BASIC)
+    verificationCode     String?          @default(" ")
+    creditCard           CreditCard[]
+    bankMoney            BankMoney[]
+}
+
+model products {
+    id              Int               @id @default(autoincrement())
+    name            String
+    price           Float
+    description     String
+    categoryId      Int
+    isAvailable     Boolean           @default(true)
+    postDate        DateTime          @default(now())
+    location        String            @default(" ")
+    user            Users             @relation(fields: [userId], references: [id], onDelete: Cascade)
+    userId          Int // add this field
+    productImages   productImages[]
+    productId       Int
+    productActions  productActions[] // add this field
+    rating          Rating[]
+    imageGetProduct ImageGetProduct[]
+}
+
+model productImages {
+    id        Int      @id @default(autoincrement())
+    fileName  String   @db.Text()
+    product   products @relation(fields: [productId], references: [id], onDelete: Cascade)
+    productId Int // add this field
+}
+
+model productActions {
+    id           Int      @id @default(autoincrement())
+    dateToRent   DateTime
+    dateFromRent DateTime
+    product      products @relation(fields: [productId], references: [id], onDelete: Cascade)
+    productId    Int
+    price        Float
+    userRenter   Users    @relation("Renter", fields: [userIdRenter], references: [id], onDelete: Cascade)
+    userIdRenter Int
+    imageGetProduct ImageGetProduct[]
+}
+
+model messages {
+    id          Int      @id @default(autoincrement())
+    message     String
+    fromUserId  Int
+    toUserId    Int
+    productId   Int     @default(0)
+    isDelete    Boolean  @default(false)
+    messageDate DateTime @default(now())
+     isRead      Boolean  @default(false)
+}
+
+model Rating {
+    id            Int      @id @default(autoincrement())
+    productReview String
+    postDate      DateTime @default(now())
+    numberOfStars Int
+    productId     Int
+    product       products @relation(fields: [productId], references: [id], onDelete: Cascade)
+    userId        Int
+    user          Users    @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model CreditCard {
+    id              Int               @id @default(autoincrement())
+    cardNumber      String
+    expiryDate      String
+    cvv             Int
+    personId        Int
+    userId          Int
+    user            Users             @relation(fields: [userId], references: [id], onDelete: Cascade)
+    bankMiddeleware BankMiddeleware[]
+}
+
+model ImageGetProduct {
+    id        Int      @id @default(autoincrement())
+    fileName  String   @db.Text()
+    productId Int
+    actionId  Int
+    userId    Int
+    isBefore  Boolean  @default(false)
+    timePost  DateTime @default(now())
+    product   products @relation(fields: [productId], references: [id], onDelete: Cascade)
+    action    productActions @relation(fields: [actionId], references: [id], onDelete: Cascade)
+}
+
+model BankMiddeleware {
+    id           Int        @id @default(autoincrement())
+    money        Float
+    creditCardId Int
+    CreditCard   CreditCard @relation(fields: [creditCardId], references: [id], onDelete: Cascade)
+}
+
+model BankMoney {
+    id     Int   @id @default(autoincrement())
+    money  Float
+    userId Int
+    user   Users @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+enum Role {
+    USER
+    ADMIN
+}
+
+enum Status {
+    BASIC
+    PREMIUM
+    BUSINESS
+}

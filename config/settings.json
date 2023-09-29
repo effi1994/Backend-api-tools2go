@@ -1,0 +1,10 @@
+{
+       "imageProfile":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAMAAABg3Am1AAAAY1BMVEUAelry+PcPgmQeiW5bqZXj8O2XybzT6OS12NB5ualqsZ55uagtknc8mYGIwbLU6OO12dCm0cbU6OQ8moFLoYseim7E4NpMoYstkXfj8e3T6OPi8O212c+12M9aqZU9mYGIwLL+xZ2oAAAA2klEQVR4Xu3UN5bDMAwEUAwYlKNz3L3/Kd2okEGJECu78K+JNyCKoa/1w+WQAVluDW1SOEy6gnSmx8xRDTEj3nRMcR5CTlEWgR3FjEBSxBlIiyixoNS+LPmPDlRYUNG6JvVKfEHgSjGVtpHEWRDAFFWLpW41KfYX8V51mG31ONAW9j49b2grbvbPmuk7sG2HbPq2O+btycQbrEdgvc+Md1jml0a4cFhXkHQeEdWJEOugcFb0l242ccImO1HAKmdEV6im1vyDoC3VA0kRBgk4PKl+2hYJ/sWNVJ5e+Q0I/UjVge0AAAAASUVORK5CYII=", 
+       "userEmail":"tolls2go@gmail.com",
+       "userPassword":"ujrwokyxkbefjxat",
+       "keyToken":"secret",
+       "BASIC":3,
+       "PREMIUM":30,
+       "BUSINESS":"unlimited",
+       "assetsBaseUrl": "http://192.168.56.1:9000/assets/"
+}
